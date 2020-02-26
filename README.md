@@ -1,4 +1,5 @@
 科幻客
+This is a wonderful place for sci-fi fans to communicate.
 
 资料
 
@@ -10,9 +11,9 @@
 
 [github deploy key]https://developer.github.com/apps
 
-[github Oauth]
+[github Oauth]https://developer.github.com/apps/building-github-apps/creating-a-github-app/
 
-[]
+
 
 工具
 
