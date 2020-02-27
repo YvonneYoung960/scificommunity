@@ -1,9 +1,11 @@
 package com.scificommunity.controller;
 
+import ch.qos.logback.core.net.server.Client;
 import com.scificommunity.dto.AccessTokenDTO;
 import com.scificommunity.dto.GithubUser;
 import com.scificommunity.provider.GithubProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,15 +15,25 @@ public class AuthorizeController {
     @Autowired
     private GithubProvider githubProvider;
 
+    @Value("${github.client.id}")
+    private String clientID;
+
+    @Value("${github.client.secret}")
+    private String clientSecret;
+
+    @Value("${github.redirect.uri}")
+    private String redirectUri;
+
+
     @GetMapping("/callback")
     public String callback(@RequestParam(name="code") String code,
                            @RequestParam(name="state") String state){
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
-        accessTokenDTO.setClient_id("aa4038a5d05a7db75c26");
-        accessTokenDTO.setClient_secret("b9c1bb9d766690463a8b499150dbd2f30f1f4120");
+        accessTokenDTO.setClient_id(clientID);
+        accessTokenDTO.setClient_secret(clientSecret);
         accessTokenDTO.setState(state);
-        accessTokenDTO.setRedirect_uri("http://localhost:8080/callback");
+        accessTokenDTO.setRedirect_uri(redirectUri);
 
         String accessToken=githubProvider.getAccessToken(accessTokenDTO);
         GithubUser user=githubProvider.getUser(accessToken);
